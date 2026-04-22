@@ -1,0 +1,4 @@
+
+type: clusterIP 
+type: NodePort
+type: LoadBalancer
