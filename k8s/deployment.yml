@@ -1,0 +1,19 @@
+apiVersion: apps/v1  # Specify the API version for the Deployment
+kind: Deployment
+metadata:
+      name: DevSecOps-deployment
+      spec: # Desired state for the Deployment
+      replicas: 3 
+      selector: # Label selector to identify the Pods managed by this Deployment
+        matchLabels:
+          app: DevSecOps-app
+      template:
+        metadata:
+          labels:
+            app: DevSecOps-app
+        spec:
+          containers:
+          - name: DevSecOps-container
+            image: devsecops-testapp:latest # in production it is best practice to use a specific version tag instead of 'latest'. So rollouts are more predictable and controlled.
+            ports:
+            - containerPort: 80
