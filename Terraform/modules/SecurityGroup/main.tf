@@ -8,6 +8,3 @@ resource "aws_security_group" "main" {
   
 }
 
-resource "ingress" "n" {
-  
-}

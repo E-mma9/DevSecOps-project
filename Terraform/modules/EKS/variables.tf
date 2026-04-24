@@ -9,6 +9,7 @@ variable "cluster_role_arn" {  # ARN of the control plane
 
 variable "node_role_arn" {  # ARN role for the worker nodes
     description = "ARN of the node role"
+    
 }
 
 variable "subnet_ids" {
