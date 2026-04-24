@@ -7,7 +7,7 @@ resource "aws_vpc" "main" {
     }
 }
 
-resource "aws_subnet" "subnet1" {
+resource "aws_subnet" "private_subnet1" {
     vpc_id = aws_vpc.main.id
     cidr_block = var.subnet_cidr
     availability_zone = var.subnet_az
@@ -17,7 +17,27 @@ resource "aws_subnet" "subnet1" {
     }
 }
 
-resource "aws_subnet" "subnet2" {
+resource "aws_subnet" "private_subnet2" {
+    vpc_id = aws_vpc.main.id
+    cidr_block = var.subnet_cidr
+    availability_zone = var.subnet_az
+    map_public_ip_on_launch = true
+    tags = {
+        Name = var.subnet_name
+        
+    }
+}
+resource "aws_subnet" "public_subnet1" {
+    vpc_id = aws_vpc.main.id
+    cidr_block = var.subnet_cidr
+    availability_zone = var.subnet_az
+    map_public_ip_on_launch = true
+    tags = {
+        Name = var.subnet_name
+    }
+}
+
+resource "aws_subnet" "public_subnet2" {
     vpc_id = aws_vpc.main.id
     cidr_block = var.subnet_cidr
     availability_zone = var.subnet_az

@@ -1,3 +1,6 @@
 K8s & Terraform
 
 Terraform eks needs atleast 2 subnets in 2 AZ. 
+
+The node role is for the worker nodes running EC2
+the cluster is for the EKS control plane
