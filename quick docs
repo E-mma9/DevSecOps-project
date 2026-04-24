@@ -1,0 +1,3 @@
+K8s & Terraform
+
+Terraform eks needs atleast 2 subnets in 2 AZ. 

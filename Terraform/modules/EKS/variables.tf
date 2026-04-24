@@ -36,8 +36,8 @@ variable "max_size" {
     default = 2
 }
 
-variable "instance_types" {
-    description = "List of instance types for the node group"
-    type = list(string)
-    default = ["t3.medium"]
+variable "instance_type" {
+    description = "EC2 instance types for the worker nodes"
+    type = string
+    default = "t3.medium"
 }
