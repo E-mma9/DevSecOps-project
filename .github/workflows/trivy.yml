@@ -32,7 +32,7 @@ jobs:
       - name: Build an image from Dockerfile
         run: |
           # Naam in kleine letters (devsecops) om Docker-errors te voorkomen
-          docker build -t devsecops:${{ github.sha }} -f ./app/Dockerfile .
+          docker build -t devsecops:${{ github.sha }} -f ./app
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
