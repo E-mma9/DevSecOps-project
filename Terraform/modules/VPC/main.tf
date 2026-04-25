@@ -66,8 +66,7 @@ resource "aws_internet_gateway" "main" {
 
 # ── Elastic IP voor de NAT Gateway ───────────────────────────────────────────
 resource "aws_eip" "nat" {
-  vpc = true # reserveert een publiek IP adres voor de NAT gateway
-
+  
   tags = {
     Name = "${var.vpc_name}-nat-eip"
   }

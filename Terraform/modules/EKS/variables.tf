@@ -26,7 +26,7 @@ variable "security_group_ids" {
 variable "kubernetes_version" {
   description = "Kubernetes versie voor het EKS cluster"
   type        = string
-  default     = "1.29" # gebruik altijd een ondersteunde versie, 1.21 is end-of-life
+  default     = "1.27" # Learner Lab ondersteunt 1.28 en 1.29 niet voor node groups
 }
 
 variable "instance_type" {

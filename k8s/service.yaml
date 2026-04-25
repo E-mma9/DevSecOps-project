@@ -1,11 +1,12 @@
+---
 apiVersion: v1
-kind: Service #service
+kind: Service
 metadata:
   name: devsecops-service
 spec:
-  type: Loadbalancer # creates AWS load balancer later
-  selector: 
-    app.kubernetes.io/name: devsecops-app # endpoint service
+  type: LoadBalancer
+  selector:
+    app: DevSecOps-app
   ports:
     - protocol: TCP
       port: 80

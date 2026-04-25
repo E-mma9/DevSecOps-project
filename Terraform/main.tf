@@ -1,4 +1,4 @@
-# ── VPC ───────────────────────────────────────────────────────────────────────
+
 module "VPC" {
   source = "./modules/VPC"
 
@@ -13,14 +13,12 @@ module "VPC" {
   rt_name             = "devsecops-rt"
 }
 
-# ── IAM ───────────────────────────────────────────────────────────────────────
 module "IAM" {
   source = "./modules/IAM"
 
   cluster_name = "devsecops-eks-cluster" # wordt gebruikt als prefix voor de IAM rol namen
 }
 
-# ── Security Group ────────────────────────────────────────────────────────────
 module "SecurityGroup" {
   source = "./modules/SecurityGroup"
 
@@ -30,7 +28,6 @@ module "SecurityGroup" {
   sg_description = "Security group voor het EKS cluster"
 }
 
-# ── EKS ───────────────────────────────────────────────────────────────────────
 module "EKS" {
   source = "./modules/EKS"
 
@@ -42,7 +39,7 @@ module "EKS" {
     module.VPC.private_subnet2_id,
   ]
   security_group_ids = [module.SecurityGroup.sg_id] # security group voor cluster communicatie
-  kubernetes_version = "1.29"                       # ondersteunde versie, 1.21 was end-of-life
+  kubernetes_version = "1.27"                       # Learner Lab ondersteunt 1.28 en 1.29 niet voor node groups
   instance_type      = "t3.medium"
   desired_size       = 2
   min_size           = 1

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws" # officiële AWS provider van HashiCorp
-      version = "~> 4.0"        # sta patch-updates toe binnen versie 4.x
+      version = "~> 5.0"        # versie 5 ondersteunt nieuwere Kubernetes AMIs
     }
   }
 }
@@ -48,21 +48,6 @@ resource "aws_s3_bucket_public_access_block" "tfstate" {
   restrict_public_buckets = true # beperkt de bucket tot alleen geauthenticeerde AWS accounts
 }
 
-resource "aws_dynamodb_table" "tfstate_lock" {
-  name         = "devsecops-tfstate-lock" # naam van de tabel die Terraform gebruikt voor state locking
-  billing_mode = "PAY_PER_REQUEST"        # betaal per request, geen vaste capaciteit nodig
-  hash_key     = "LockID"                 # verplicht primaire sleutel die Terraform gebruikt voor het lock-mechanisme
-
-  attribute {
-    name = "LockID" # attribuut naam die Terraform verwacht voor state locking
-    type = "S"      # string type
-  }
-}
-
 output "bucket_name" {
   value = aws_s3_bucket.tfstate.bucket # toont de bucket naam na apply, gebruik dit in de backend config
-}
-
-output "dynamodb_table" {
-  value = aws_dynamodb_table.tfstate_lock.name # toont de tabel naam na apply, gebruik dit in de backend config
 }

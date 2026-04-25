@@ -4,11 +4,11 @@ output "cluster_name" {
 }
 
 output "cluster_role_arn" {
-  description = "ARN van de EKS control plane IAM rol — vereist door aws_eks_cluster"
-  value       = aws_iam_role.eks_cluster_role.arn # ARN van de aangemaakt rol, niet de input variable
+  description = "ARN van de LabRole — gebruikt als EKS control plane rol"
+  value       = data.aws_iam_role.lab_role.arn # LabRole heeft al de benodigde EKS rechten
 }
 
 output "node_role_arn" {
-  description = "ARN van de EKS worker node IAM rol — vereist door aws_eks_node_group"
-  value       = aws_iam_role.eks_node_role.arn # ARN van de aangemaakt rol, niet de input variable
+  description = "ARN van de LabRole — gebruikt als EKS worker node rol"
+  value       = data.aws_iam_role.lab_role.arn # zelfde rol voor nodes, Learner Lab staat geen aparte rollen toe
 }

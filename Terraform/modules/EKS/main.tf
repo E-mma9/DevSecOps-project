@@ -17,6 +17,7 @@ resource "aws_eks_node_group" "main" {
   node_role_arn   = var.node_role_arn          # IAM rol die de worker nodes toestemming geeft
   subnet_ids      = var.subnet_ids             # worker nodes draaien in private subnets
   instance_types  = [var.instance_type]
+  ami_type        = "AL2_x86_64" # expliciet Amazon Linux 2 AMI opgeven om versie-conflicten te vermijden
 
   scaling_config {
     desired_size = var.desired_size # normaal gewenst aantal nodes
