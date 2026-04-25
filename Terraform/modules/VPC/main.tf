@@ -1,4 +1,4 @@
-# ── VPC ──────────────────────────────────────────────────────────────────────
+
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true  # vereist zodat EKS nodes DNS namen kunnen oplossen
@@ -9,12 +9,12 @@ resource "aws_vpc" "main" {
   }
 }
 
-# ── Private subnets (worker nodes) ───────────────────────────────────────────
+
 resource "aws_subnet" "private_subnet1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.private_subnet_cidr[0] # eerste private CIDR uit de lijst
   availability_zone       = var.subnet_az              # eerste AZ
-  map_public_ip_on_launch = false                      # private subnet — geen publiek IP
+  map_public_ip_on_launch = false                      # private subnet, geen publiek IP
 
   tags = {
     Name = "${var.subnet_name}-private-1"
@@ -32,12 +32,12 @@ resource "aws_subnet" "private_subnet2" {
   }
 }
 
-# ── Public subnets (NAT gateway, load balancers) ─────────────────────────────
+
 resource "aws_subnet" "public_subnet1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidr[0] # eerste public CIDR uit de lijst
   availability_zone       = var.subnet_az             # eerste AZ
-  map_public_ip_on_launch = true                      # public subnet — krijgt automatisch een publiek IP
+  map_public_ip_on_launch = true                      # public subnet, krijgt automatisch een publiek IP
 
   tags = {
     Name = "${var.subnet_name}-public-1"
@@ -48,14 +48,14 @@ resource "aws_subnet" "public_subnet2" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidr[1] # tweede public CIDR uit de lijst
   availability_zone       = var.subnet_az2            # tweede AZ
-  map_public_ip_on_launch = true                      # public subnet — krijgt automatisch een publiek IP
+  map_public_ip_on_launch = true                      # public subnet, krijgt automatisch een publiek IP
 
   tags = {
     Name = "${var.subnet_name}-public-2"
   }
 }
 
-# ── Internet Gateway (public internettoegang) ─────────────────────────────────
+
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id # koppelt de IGW aan de VPC
 
@@ -64,17 +64,14 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-# ── Elastic IP voor de NAT Gateway ───────────────────────────────────────────
 resource "aws_eip" "nat" {
-  
   tags = {
     Name = "${var.vpc_name}-nat-eip"
   }
 }
 
-# ── NAT Gateway (private subnets bereiken het internet) ──────────────────────
 resource "aws_nat_gateway" "main" {
-  allocation_id = aws_eip.nat.id          # koppelt het gereserveerde publieke IP
+  allocation_id = aws_eip.nat.id          # koppelt het publieke IP
   subnet_id     = aws_subnet.public_subnet1.id # NAT gateway staat in een public subnet
 
   tags = {
@@ -84,7 +81,6 @@ resource "aws_nat_gateway" "main" {
   depends_on = [aws_internet_gateway.main] # IGW moet bestaan voordat NAT gateway werkt
 }
 
-# ── Public route table (via Internet Gateway) ─────────────────────────────────
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -108,7 +104,6 @@ resource "aws_route_table_association" "public2" {
   route_table_id = aws_route_table.public.id
 }
 
-# ── Private route table (via NAT Gateway) ────────────────────────────────────
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 

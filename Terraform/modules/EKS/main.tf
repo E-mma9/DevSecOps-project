@@ -1,4 +1,4 @@
-# ── EKS Cluster (control plane) ───────────────────────────────────────────────
+# ── EKS Cluster (control plane) 
 resource "aws_eks_cluster" "main" {
   name     = var.cluster_name
   role_arn = var.cluster_role_arn # IAM rol die de control plane toestemming geeft
@@ -10,7 +10,7 @@ resource "aws_eks_cluster" "main" {
   }
 }
 
-# ── EKS Node Group (worker nodes) ────────────────────────────────────────────
+# ── EKS Node Group (worker nodes) 
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.main.name  # impliciet depends_on — node group wacht op het cluster
   node_group_name = "${var.cluster_name}-ng"
