@@ -1,15 +1,19 @@
 variable "sg_name" {
-  description = "The name of the security group"
+  description = "Naam van de security group"
   type        = string
 }
 
 variable "sg_description" {
-  description = "A description of the security group"
+  description = "Beschrijving van de security group"
   type        = string
 }
 
 variable "vpc_id" {
-  description = "The ID of the VPC where the security group will be created"
+  description = "ID van de VPC waar de security group in wordt aangemaakt"
   type        = string
 }
 
+variable "vpc_cidr" {
+  description = "CIDR blok van de VPC — gebruikt voor ingress regels binnen het netwerk"
+  type        = string
+}
