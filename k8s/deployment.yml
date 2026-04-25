@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: DevSecOps-deployment
+spec:
   replicas: 3
   selector:
     matchLabels:
@@ -11,9 +12,9 @@ metadata:
     metadata:
       labels:
         app: DevSecOps-app
-      spec:
-        containers:
-          - name: DevSecOps
-            image: 450050505346.dkr.ecr.us-east-1.amazonaws.com/devsecops-testapp:latest
-            ports:
-              - containerPort: 80
+    spec:
+      containers:
+        - name: DevSecOps
+          image: 450050505346.dkr.ecr.us-east-1.amazonaws.com/devsecops-testapp:latest
+          ports:
+            - containerPort: 80
